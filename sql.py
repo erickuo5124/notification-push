@@ -32,14 +32,22 @@ def insert(endpoint, p256dh, auth, private_key):
   conn.commit()
   conn.close()
 
+def delete(auth):
+  dbfile = "subscribe.db"
+  conn = sqlite3.connect(dbfile)
+  sql_str = 'DELETE FROM subscribe WHERE auth=?'
+  conn.execute(sql_str, (auth,))
+  conn.commit()
+  conn.close()
+
 if __name__ == '__main__':
-  init()
-  subscription_info = {
-    "endpoint":"https://fcm.googleapis.com/fcm/send/fdBNKZvXYhs:APA91bEVM02PZUs_0V8qR3Km6GBI9ID-yjhep4R8NQPvdv646UanqgH3oQFRlpw7BA_nFgkoy8SlL4sUOuwAnd_9edZT4dkR7FFoKYcjblghJ55DGGwOaCAfq-uoZ24x2l9TJZ0hpt_B",
-    "p256dh":"BBQiPGr1HSlZ78Ytj1hjyzr9B7ERWUwZUBTTqKv3XctqiOUXa6_PWyook9qI7yblOt9IywP0OqC_lAJnsCWTjDw",
-    "auth":"uEif1olhhAL0mJsL740pPw",
-    "private_key" :"_8LEZ2THM7xRrzEMcez2Z3FjV_PCkHb95D0XRjav_AI"
-  }
-  insert(**subscription_info)
-  print(get_data())
-  pass
+  # init()
+  # subscription_info = {
+  #   "endpoint":"https://fcm.googleapis.com/fcm/send/fdBNKZvXYhs:APA91bEVM02PZUs_0V8qR3Km6GBI9ID-yjhep4R8NQPvdv646UanqgH3oQFRlpw7BA_nFgkoy8SlL4sUOuwAnd_9edZT4dkR7FFoKYcjblghJ55DGGwOaCAfq-uoZ24x2l9TJZ0hpt_B",
+  #   "p256dh":"BBQiPGr1HSlZ78Ytj1hjyzr9B7ERWUwZUBTTqKv3XctqiOUXa6_PWyook9qI7yblOt9IywP0OqC_lAJnsCWTjDw",
+  #   "auth":"uEif1olhhAL0mJsL740pPw",
+  #   "private_key" :"_8LEZ2THM7xRrzEMcez2Z3FjV_PCkHb95D0XRjav_AI"
+  # }
+  # insert(**subscription_info)
+  # print(get_data())
+  delete('uEif1olhhAL0mJsL740pPw')

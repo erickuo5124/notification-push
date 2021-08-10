@@ -18,6 +18,7 @@ def push_notification(endpoint, p256dh, auth, private_key):
         "sub": "mailto:YourNameHere@example.org",
       }
     )
+    return True
   except WebPushException as ex:
     print("I'm sorry, Dave, but I can't do that: {}", repr(ex))
     # Mozilla returns additional information in the body of the response.
@@ -28,3 +29,4 @@ def push_notification(endpoint, p256dh, auth, private_key):
         extra.errno,
         extra.message
       )
+    return False

@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from sql import get_data, insert
+from sql import get_data, insert, delete
 from push import push_notification
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def home():
@@ -10,7 +12,7 @@ def home():
 
 @app.route('/test')
 def test():
-  return 'hinotification-'
+  return 'hi'
 
 # push notification to all subscribed user
 @app.route('/push',methods = ['POST'])
@@ -19,7 +21,11 @@ def push():
   print(f'hi {message}')
   users = get_data()
   for user in users:
-    push_notification(**user)
+    res = push_notification(**user)
+    if not res:
+      delete(user['auth'])
+    else:
+      continue
   return redirect(url_for('home'))
 
 # insert new user to db
