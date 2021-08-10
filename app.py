@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from sql import get_data, insert, delete
+from sql import get_data, insert, delete, get_data
 from push import push_notification
 from flask_cors import CORS
 
@@ -44,6 +44,11 @@ def add():
   except:
     print(data)
     return 'error!'
+
+@app.route('/show', methods = ['GET'])
+def show():
+  data = get_data()
+  return jsonify(data)
 
 if __name__ == '__main__':
   app.run(debug = True, port=5000)
