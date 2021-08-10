@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pywebpush = "*"
 flask = "*"
+gunicorn = "*"
 
 [dev-packages]
 
