@@ -18,10 +18,9 @@ def test():
 @app.route('/push',methods = ['POST'])
 def push():
   message = request.form['message']
-  print(f'hi {message}')
   users = get_data()
   for user in users:
-    res = push_notification(**user)
+    res = push_notification(**user, message=message)
     if not res:
       delete(user['auth'])
     else:

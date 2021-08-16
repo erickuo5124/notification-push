@@ -1,6 +1,6 @@
 from pywebpush import webpush, WebPushException
 
-def push_notification(endpoint, p256dh, auth, private_key):
+def push_notification(endpoint, p256dh, auth, private_key, message):
   subscription_info = {
     "endpoint": endpoint,
     "keys":{
@@ -12,7 +12,7 @@ def push_notification(endpoint, p256dh, auth, private_key):
   try:
     webpush(
       subscription_info,
-      data="Mary had a little lamb, with a nice mint jelly",
+      data=message,
       vapid_private_key=private_key,
       vapid_claims={
         "sub": "mailto:YourNameHere@example.org",
