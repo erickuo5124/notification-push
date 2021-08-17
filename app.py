@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from sql import get_data, insert, delete, get_data
-from push import push_notification
+from push import push_notification, get_public_key
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -35,9 +35,8 @@ def add():
   try:
     insert(
       endpoint=data['endpoint'],
-      p256dh=data['p256dh'],
-      auth=data['auth'],
-      private_key=data['private_key']
+      p256dh=data['keys']['p256dh'],
+      auth=data['keys']['auth']
     )
     return 'success!'
   except:
@@ -48,6 +47,10 @@ def add():
 def show():
   data = get_data()
   return jsonify(data)
+
+@app.route('/key', methods=['GET'])
+def get_key():
+  return get_public_key()
 
 if __name__ == '__main__':
   app.run(debug = True, port=5000)
